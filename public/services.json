@@ -1,0 +1,172 @@
+[
+  {
+    "service_id": "01",
+    "title": "Cattle Foot-and-Mouth Vaccination",
+    "img": "https://i.ibb.co/rGQfMNR6/melany-tuinfosalud-com-F6clvre8f-Gg-unsplash.jpg",
+    "price": "450.00",
+    "description": "Immunization to protect cattle against foot-and-mouth disease.",
+    "facility": [
+      { "name": "On-site service", "details": "Delivery and administration at your farm." },
+      { "name": "Experienced Veterinarian", "details": "Trained staff ensuring safe vaccination." }
+    ],
+    "animal_drug": {
+      "name": "FMD-Guard Vaccine",
+      "title": "Foot-and-Mouth Disease Vaccine",
+      "price": "50.00",
+      "description": "Inactivated vaccine for prevention of foot-and-mouth disease in cattle."
+    }
+  },
+  {
+    "service_id": "02",
+    "title": "Sheep & Goat Deworming",
+    "img": "https://i.ibb.co/5W7yXYJ8/the-tonik-cm-SYWem-Xmb-A-unsplash.jpg",
+    "price": "200.00",
+    "description": "Treatment against internal parasites in sheep and goats.",
+    "facility": [
+      { "name": "Oral dosing", "details": "Easy to administer livestock-friendly paste." },
+      { "name": "Safe for Pregnancy", "details": "Approved for use in pregnant animals." }
+    ],
+    "animal_drug": {
+      "name": "Albendazole Paste",
+      "title": "Broad-Spectrum Dewormer",
+      "price": "20.00",
+      "description": "Effective against nematodes, trematodes, and cestodes in small ruminants."
+    }
+  },
+  {
+    "service_id": "03",
+    "title": "Poultry Respiratory Treatment",
+    "img": "https://i.ibb.co/v60K3pVk/natali-hordiiuk-Ev-V3-AJc-Ax-J4-unsplash.jpg",
+    "price": "300.00",
+    "description": "Treatment for common respiratory illnesses in poultry flocks.",
+    "facility": [
+      { "name": "Water-soluble", "details": "Easy addition to drinking water." },
+      { "name": "Fast Acting", "details": "Rapid onset to reduce mortality." }
+    ],
+    "animal_drug": {
+      "name": "Tylosin Soluble Powder",
+      "title": "Macrolide Antibiotic",
+      "price": "15.00",
+      "description": "Effective for treating respiratory and enteric infections in poultry."
+    }
+  },
+  {
+    "service_id": "04",
+    "title": "Cattle Mastitis Intramammary Treatment",
+    "img": "https://i.ibb.co/Pvw6tJTj/etactics-inc-aa-Y0-Vz-Xa-Si-I-unsplash.jpg",
+    "price": "500.00",
+    "description": "Localized treatment for udder infections in dairy cows.",
+    "facility": [
+      { "name": "Direct Application", "details": "Administered directly into the udder." },
+      { "name": "Milk Withdrawal Schedule", "details": "Guidance on safe milk consumption." }
+    ],
+    "animal_drug": {
+      "name": "Cloxacillin Intramammary Cream",
+      "title": "Mastitis Therapy",
+      "price": "30.00",
+      "description": "Targeted antibiotic therapy for bacterial mastitis in dairy cattle."
+    }
+  },
+  {
+    "service_id": "05",
+    "title": "Swine Parvovirus Vaccination",
+    "img": "https://i.ibb.co/zh8mLDLj/bruno-guerrero-FDv-Arko-Gyv-I-unsplash.jpg",
+    "price": "400.00",
+    "description": "Vaccination to prevent porcine parvovirus-induced reproductive issues.",
+    "facility": [
+      { "name": "Cold Chain Assured", "details": "Vaccine integrity maintained." },
+      { "name": "Group Administration", "details": "Quick herd-level vaccination." }
+    ],
+    "animal_drug": {
+      "name": "PorciShield Parvo Vaccine",
+      "title": "Swine Parvovirus Vaccine",
+      "price": "35.00",
+      "description": "Inactivated vaccine preventing reproductive failure in sows."
+    }
+  },
+  {
+    "service_id": "06",
+    "title": "Calf Scour Electrolyte Therapy",
+    "img": "https://i.ibb.co/PJPwCcQ/natali-hordiiuk-4-IAi-DVBN3-X8-unsplash.jpg",
+    "price": "250.00",
+    "description": "Rehydration treatment for calves suffering from diarrhea (scours).",
+    "facility": [
+      { "name": "Oral Electrolytes", "details": "Easy-to-mix solution." },
+      { "name": "Rehydration Plan", "details": "Dosage schedule provided." }
+    ],
+    "animal_drug": {
+      "name": "CalfRehydrate Mix",
+      "title": "Oral Electrolyte Solution",
+      "price": "12.00",
+      "description": "Balanced electrolyte mix with vitamins to support calf recovery."
+    }
+  },
+  {
+    "service_id": "07",
+    "title": "Equine Joint Supplement Therapy",
+    "img": "https://i.ibb.co/1J7Dy8x0/alexander-grey-FEPfs43yi-PE-unsplash.jpg",
+    "price": "600.00",
+    "description": "Supports joint health and mobility in horses via injectable supplement.",
+    "facility": [
+      { "name": "Veterinary Injection", "details": "Administered under sterile conditions." },
+      { "name": "Mobility Follow-Up", "details": "Monitoring physical recovery." }
+    ],
+    "animal_drug": {
+      "name": "HyalurEase IV",
+      "title": "Joint Hyaluronic Acid Supplement",
+      "price": "75.00",
+      "description": "Restores joint lubrication and relieves arthritic symptoms in horses."
+    }
+  },
+  {
+    "service_id": "08",
+    "title": "Beef Cattle Bovine Respiratory Complex (BRC) Vaccination",
+    "img": "https://i.ibb.co/nsb2HFcm/assorted-pharmaceutical-capsules-syringes-with-serums.jpg",
+    "price": "550.00",
+    "description": "Combo vaccine to prevent multiple respiratory pathogens in beef cattle.",
+    "facility": [
+      { "name": "Multivalent", "details": "Covers several key respiratory diseases." },
+      { "name": "One-Dose Schedule", "details": "Single shot with booster plan." }
+    ],
+    "animal_drug": {
+      "name": "RespiraShield Multi-Vac",
+      "title": "BRC Multivalent Vaccine",
+      "price": "45.00",
+      "description": "Protects against BRD pathogens including IBR, BVD, and PI3."
+    }
+  },
+  {
+    "service_id": "09",
+    "title": "Rabbit Coccidiosis",
+    "img": "https://i.ibb.co/wNKzm518/medicine-bottles-tablets-wooden-desk.jpg",
+    "price": "180.00",
+    "description": "Treatment for intestinal coccidiosis in rabbits via oral medication.",
+    "facility": [
+      { "name": "Flavor-Masked", "details": "Pellets are easy for rabbits to ingest." },
+      { "name": "Safe for Growth", "details": "Formulated for young rabbits." }
+    ],
+    "animal_drug": {
+      "name": "CoccidiClear Pellets",
+      "title": "Rabbit Coccidiosis Remedy",
+      "price": "25.00",
+      "description": "Contains sulfa drug mixture effective against coccidia in rabbits."
+    }
+  },
+  {
+    "service_id": "10",
+    "title": "Fish Pond Antiparasitic Treatment",
+    "img": "https://i.ibb.co/Pvw6tJTj/etactics-inc-aa-Y0-Vz-Xa-Si-I-unsplash.jpg",
+    "price": "220.00",
+    "description": "Treatment for external and internal parasites in aquaculture ponds.",
+    "facility": [
+      { "name": "Water-Safe", "details": "Non-toxic for aquaculture." },
+      { "name": "Fast-Acting", "details": "Rapid clearance of parasites." }
+    ],
+    "animal_drug": {
+      "name": "AquaMectin Concentrate",
+      "title": "Aquatic Antiparasitic",
+      "price": "40.00",
+      "description": "Targets flukes and protozoans in fish ponds safely."
+    }
+  }
+]
