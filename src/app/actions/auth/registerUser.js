@@ -7,8 +7,10 @@ export const registerUser = async (payload) => {
   try {
     const usersCollection = await dbConnect(collectionNameObj.usersCollection);
 
-    const { email, password } = payload;
-    if (!email || !password) return null;
+    const { email, password, name } = payload;
+    if (!email || !password || !name) {
+      throw new Error("Name, email and password are required");
+    }
 
     // Check if user already exists
     const existingUser = await usersCollection.findOne({ email });
@@ -16,24 +18,24 @@ export const registerUser = async (payload) => {
       throw new Error("User already exists");
     }
 
-    // Hash the password
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user object with hashed password
     const newUser = {
-      ...payload,
+      name,
+      email,
       password: hashedPassword,
+      createdAt: new Date(),
     };
 
-    // Insert new user
     const result = await usersCollection.insertOne(newUser);
 
     return {
-      acknowledged: result.acknowledged,
+      success: true,
       insertedId: result.insertedId,
     };
   } catch (error) {
     console.error("Registration DB Error:", error);
-    throw new Error(error.message || "Registration failed");
+    return { success: false, message: error.message };
   }
 };

@@ -44,9 +44,23 @@ export const authOptions = {
   session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      if (url.startsWith(baseUrl)) return url;
-      return baseUrl;
+    async signIn({ user, account, profile }) {
+      if (account.provider === "google") {
+        const usersCollection = await dbConnect(
+          collectionNameObj.usersCollection
+        );
+        const existingUser = await usersCollection.findOne({
+          email: user.email,
+        });
+        if (!existingUser) {
+          await usersCollection.insertOne({
+            name: user.name,
+            email: user.email,
+            createdAt: new Date(),
+          });
+        }
+      }
+      return true;
     },
   },
 };

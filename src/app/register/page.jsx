@@ -12,8 +12,6 @@ export default function Register() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
-  // Server Action সরাসরি এখানে কল করা যাবে না, তাই fetch ইউজ করতে হবে:
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

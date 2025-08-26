@@ -1,24 +1,61 @@
+// app/all-products/page.jsx
 import React from "react";
 import Link from "next/link";
-import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import Image from "next/image";
+import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 
-export default async function AllProducts() {
+const PAGE_SIZE = 8; // Number of products per page
+
+const AllProducts = async ({ searchParams }) => {
+  const page = parseInt(searchParams?.page || 1);
+  const search = searchParams?.search || "";
+
   const productsCollection = await dbConnect(
     collectionNameObj.productsCollection
   );
-  const products = await productsCollection.find({}).toArray();
+
+  // Build query for search
+  const query = search ? { title: { $regex: search, $options: "i" } } : {};
+
+  const totalProducts = await productsCollection.countDocuments(query);
+  const totalPages = Math.ceil(totalProducts / PAGE_SIZE);
+
+  const products = await productsCollection
+    .find(query)
+    .skip((page - 1) * PAGE_SIZE)
+    .limit(PAGE_SIZE)
+    .toArray();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-900 dark:text-gray-100">
         All Products
       </h1>
-      <p className="max-w-2xl mx-auto text-center text-gray-600 dark:text-gray-400 mb-12">
-        Browse through our wide range of products carefully selected for you.
-      </p>
 
+      {/* Search Box */}
+      <form method="GET" className="max-w-md mx-auto mb-8 flex">
+        <input
+          type="text"
+          name="search"
+          defaultValue={search}
+          placeholder="Search products..."
+          className="flex-grow p-2 border rounded-l-md dark:bg-gray-800 dark:text-white"
+        />
+        <button
+          type="submit"
+          className="px-4 bg-green-600 text-white rounded-r-md hover:bg-green-700 transition-colors"
+        >
+          Search
+        </button>
+      </form>
+
+      {/* Products Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        {products.length === 0 && (
+          <p className="col-span-4 text-center text-gray-600 dark:text-gray-400">
+            No products found.
+          </p>
+        )}
         {products.map((product) => (
           <div
             key={product._id.toString()}
@@ -33,10 +70,9 @@ export default async function AllProducts() {
                 sizes="(max-width: 640px) 100vw, 400px"
                 style={{ objectFit: "cover" }}
                 className="transition-transform duration-300 ease-in-out hover:scale-105"
-                unoptimized={true} // Add this if external images cause issues
+                unoptimized={true}
               />
             </div>
-
             <div className="flex flex-col flex-grow p-5">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
                 {product.title}
@@ -44,12 +80,10 @@ export default async function AllProducts() {
               <p className="text-green-600 font-bold text-lg">
                 ${product.price}
               </p>
-
               <div className="mt-auto">
                 <Link
                   href={`/products/${product._id.toString()}`}
                   className="block w-full text-center py-2 rounded-lg border-2 border-green-600 text-green-600 dark:border-green-400 dark:text-green-400 hover:bg-green-600 hover:text-white dark:hover:bg-green-400 dark:hover:text-gray-900 transition-colors duration-300"
-                  aria-label={`View details for ${product.title}`}
                 >
                   View Details
                 </Link>
@@ -58,6 +92,29 @@ export default async function AllProducts() {
           </div>
         ))}
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center mt-10 gap-3">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <Link
+              key={i + 1}
+              href={`/all-products?page=${i + 1}${
+                search ? `&search=${search}` : ""
+              }`}
+              className={`px-4 py-2 rounded-md border ${
+                page === i + 1
+                  ? "bg-green-600 text-white border-green-600"
+                  : "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700"
+              } hover:bg-green-600 hover:text-white transition-colors`}
+            >
+              {i + 1}
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default AllProducts;
