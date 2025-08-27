@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.NEXT_PUBLIC_MONGODB_URI;
+const uri = process.env.MONGODB_URI;
 const options = {};
 
 let client;
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "development") {
 
 export default async function dbConnect(collectionName) {
   const client = await clientPromise;
-  const db = client.db(process.env.MONGODB_DB);
+  const db = client.db(process.env.DB_NAME);  
   return db.collection(collectionName);
 }
 

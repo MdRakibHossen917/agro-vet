@@ -3,16 +3,17 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 export const collectionNameObj = {
   productsCollection: "products",
   usersCollection: "users",
-  bookingsCollection: "booking",
+  bookingsCollection: "bookings",
 };
 
 let client;
 let clientPromise;
 
 const uri = process.env.MONGODB_URI;
+const dbName = process.env.DB_NAME;
+
 if (!uri) throw new Error("Please define the MONGODB_URI environment variable");
-if (!process.env.DB_NAME)
-  throw new Error("Please define the DB_NAME environment variable");
+if (!dbName) throw new Error("Please define the DB_NAME environment variable");
 
 const options = {
   serverApi: {
@@ -20,9 +21,7 @@ const options = {
     strict: true,
     deprecationErrors: true,
   },
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  connectTimeoutMS: 60000, // 60 seconds
+  connectTimeoutMS: 60000,
 };
 
 if (process.env.NODE_ENV === "development") {
@@ -37,7 +36,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
 export default async function dbConnect(collectionName) {
+  if (!collectionName) throw new Error("Please provide a collection name");
   const client = await clientPromise;
-  const db = client.db(process.env.DB_NAME);
+  const db = client.db(dbName);
   return db.collection(collectionName);
 }
