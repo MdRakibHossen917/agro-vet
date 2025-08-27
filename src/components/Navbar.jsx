@@ -18,6 +18,9 @@ export default function Navbar() {
         <Link href="/all-products">Products</Link>
       </li>
       <li>
+        <Link href="/all-articles">Articles</Link>
+      </li>
+      <li>
         <Link href="/my-bookings">My Bookings</Link>
       </li>
     </>

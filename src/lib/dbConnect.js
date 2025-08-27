@@ -4,6 +4,7 @@ export const collectionNameObj = {
   productsCollection: "products",
   usersCollection: "users",
   bookingsCollection: "bookings",
+  articlesCollection: "articles",
 };
 
 let client;
