@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function MyBookings() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const [bookings, setBookings] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
   const [editBooking, setEditBooking] = useState(null);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -17,10 +19,16 @@ function MyBookings() {
     address: "",
   });
 
-  // Fetch bookings
+  // Redirect to login if not logged in
   useEffect(() => {
-    fetchBookings();
-  }, []);
+    if (status === "unauthenticated") {
+      router.push("/login"); // login page এ redirect
+    } else if (session) {
+      fetchBookings();
+    } else {
+      setLoading(false);
+    }
+  }, [session, status, router]);
 
   const fetchBookings = async () => {
     try {
@@ -35,15 +43,9 @@ function MyBookings() {
     }
   };
 
-   
-
-  // Delete booking
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(
-        `https://agro-vet.vercel.app/api/bookings/${id}`,
-        { method: "DELETE" }
-      );
+      const res = await fetch(`/api/bookings/${id}`, { method: "DELETE" });
       if (res.ok) {
         setBookings((prev) => prev.filter((b) => b._id !== id));
         toast.success("Booking deleted successfully!");
@@ -55,7 +57,6 @@ function MyBookings() {
     }
   };
 
-  // Open edit modal
   const handleEditClick = (booking) => {
     setEditBooking(booking._id);
     setFormData({
@@ -66,7 +67,6 @@ function MyBookings() {
     });
   };
 
-  // Save edit changes
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -87,33 +87,31 @@ function MyBookings() {
     }
   };
 
-const { data: session } = useSession();
-if (!session) return (
-  <div className="flex justify-center items-center min-h-[200px]">
-    <div className="bg-gray-100 dark:bg-gray-800 px-6 py-4 rounded-lg shadow text-center">
-      <p className="text-gray-600 dark:text-gray-300 text-lg font-medium">
-        You have no products 😔
-      </p>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-        Start adding some to see them here.
-      </p>
-    </div>
-  </div>
-);
+  if (status === "loading" || loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+      </div>
+    );
 
-
-  if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">Error: {error}</div>;
 
   return (
     <div className="p-4 bg-white dark:bg-gray-900 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-500">
       <Toaster position="top-center" />
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">My Bookings</h2>
-      </div>
+      <h2 className="text-2xl font-bold mb-6">My Bookings</h2>
 
       {bookings.length === 0 ? (
-        <div>No bookings found</div>
+        <div className="flex justify-center items-center min-h-[200px]">
+          <div className="bg-gray-100 dark:bg-gray-800 px-6 py-4 rounded-lg shadow text-center">
+            <p className="text-gray-600 dark:text-gray-300 text-lg font-medium">
+              No bookings found 😔
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              You have not booked any products yet.
+            </p>
+          </div>
+        </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300 dark:border-gray-700">

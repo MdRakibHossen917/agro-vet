@@ -32,7 +32,7 @@ export default function LoginPage() {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-6 rounded shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login X</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <input
