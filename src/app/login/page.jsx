@@ -1,13 +1,21 @@
 "use client";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import SocialLogin from "./components/SocialLogin";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      router.push("/");
+    }
+  }, [session]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,44 +24,49 @@ export default function LoginPage() {
       email,
       password,
     });
-
     if (result.error) {
       Swal.fire("Error", result.error, "error");
-    } else {
-      Swal.fire("Success", "Login successful!", "success").then(() => {
-        router.push("/"); // redirect to homepage
-      });
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <form
-        onSubmit={handleLogin}
-        className=" p-6 rounded shadow-md w-96"
-      >
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full p-2 mb-3 border rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full p-2 mb-3 border rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded"
-        >
-          Login
-        </button>
-      </form>
+      <div className="w-full max-w-md p-6 rounded shadow-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Login X</h2>
+
+        <form onSubmit={handleLogin} className="space-y-4">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 border rounded"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-3 border rounded"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white p-3 rounded"
+          >
+            Login
+          </button>
+        </form>
+
+        <div className="flex items-center my-4">
+          <hr className="flex-grow border-gray-300" />
+          <span className="mx-2 text-gray-500">OR</span>
+          <hr className="flex-grow border-gray-300" />
+        </div>
+
+        <SocialLogin />
+      </div>
     </div>
   );
 }

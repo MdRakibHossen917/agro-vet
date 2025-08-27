@@ -1,23 +1,13 @@
 "use client";
-
-import React from "react";
-import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
 
 export default function SocialLogin() {
-  const router = useRouter();
-
   const handleGoogleLogin = async () => {
-    const result = await signIn("google", {
-      redirect: false,
-      callbackUrl: "/",
+    await signIn("google", {
+      redirect: true,  
+      callbackUrl: "/",  
     });
-    if (!result?.error) {
-      router.push("/");
-    } else {
-      alert("Login failed: " + result.error);
-    }
   };
 
   return (

@@ -1,13 +1,13 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 export default function CheckoutForm({ data }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -21,6 +21,7 @@ export default function CheckoutForm({ data }) {
     img: data?.img || "",
   });
 
+  // Prefill form from session
   useEffect(() => {
     if (session?.user) {
       setFormData((prev) => ({
@@ -43,8 +44,9 @@ export default function CheckoutForm({ data }) {
     e.preventDefault();
 
     if (!session) {
-      toast.error("You need to log in first!");
-      router.push("/login");
+      // login required
+      toast.error("Please login first!");
+      signIn("google", { callbackUrl: window.location.href });
       return;
     }
 
@@ -67,102 +69,124 @@ export default function CheckoutForm({ data }) {
     }
   };
 
+  const isDisabled = !session;
+
   return (
-    <div className="max-w-lg mx-auto p-8 bg-white dark:bg-gray-900 rounded-2xl shadow-lg transition-colors duration-300">
-      <h2 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">
-        Checkout
+    <div className="max-w-md mx-auto p-8 bg-white dark:bg-gray-900 rounded-xl shadow-lg transition-colors duration-300">
+      <h2 className="text-3xl font-semibold mb-6 text-center text-gray-900 dark:text-gray-100">
+        Checkout Form
       </h2>
 
+      {!session && (
+        <p className="text-red-500 text-center mb-4">
+          Please log in to place an order.
+        </p>
+      )}
+
       {formData.img && (
-        <div className="w-full h-52 relative rounded-xl overflow-hidden mb-6 shadow-md">
+        <div className="w-full h-48 relative rounded-lg overflow-hidden mb-6 shadow-md">
           <Image
             src={formData.img}
             alt={formData.title}
             fill
             style={{ objectFit: "cover" }}
-            className="rounded-xl"
             priority
           />
         </div>
       )}
 
-      <div className="mb-6 text-center">
-        <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-          {formData.title || "Product"}
-        </h3>
-        <p className="text-xl font-bold text-blue-600 dark:text-blue-400">
-          Price: ${formData.price || "0.00"}
-        </p>
-      </div>
+      <h3 className="text-2xl font-bold mb-1 text-gray-900 dark:text-gray-100">
+        {formData.title || "Product"}
+      </h3>
+      <p className="mb-8 text-xl font-semibold text-blue-600 dark:text-blue-400">
+        Price: ${formData.price || "0.00"}
+      </p>
 
-      {!session && (
-        <p className="text-center text-red-500 font-medium mb-4">
-          Please log in to place an order
-        </p>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Full Name & Email (readonly) */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+            Full Name
+          </label>
           <input
             type="text"
             name="fullName"
             value={formData.fullName}
             readOnly
-            placeholder="Full Name"
-            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 cursor-not-allowed"
+            disabled={isDisabled}
+            className="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 cursor-not-allowed"
           />
+        </div>
+
+        <div>
+          <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+            Email
+          </label>
           <input
             type="email"
             name="email"
             value={formData.email}
             readOnly
-            placeholder="Email"
-            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 cursor-not-allowed"
+            disabled={isDisabled}
+            className="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 cursor-not-allowed"
           />
         </div>
 
-        {/* Phone */}
-        <input
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          placeholder="Phone Number"
-          required
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition"
-        />
+        <div>
+          <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Enter your phone number"
+            required
+            disabled={isDisabled}
+            className="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          />
+        </div>
 
-        {/* Address */}
-        <textarea
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-          placeholder="Address"
-          required
-          rows={3}
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition"
-        />
+        <div>
+          <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+            Address
+          </label>
+          <textarea
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            placeholder="Enter your address"
+            required
+            disabled={isDisabled}
+            rows={3}
+            className="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          />
+        </div>
 
-        {/* Notes */}
-        <textarea
-          name="notes"
-          value={formData.notes}
-          onChange={handleChange}
-          placeholder="Additional Notes (optional)"
-          rows={3}
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition"
-        />
+        <div>
+          <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+            Additional Notes
+          </label>
+          <textarea
+            name="notes"
+            value={formData.notes}
+            onChange={handleChange}
+            placeholder="Any special requests?"
+            rows={3}
+            disabled={isDisabled}
+            className="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          />
+        </div>
 
         <button
           type="submit"
-          className={`w-full py-3 rounded-xl font-bold text-white transition ${
-            session
-              ? "bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600"
-              : "bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-400 dark:hover:bg-yellow-500"
-          }`}
+          className={`w-full py-3 ${
+            isDisabled
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600"
+          } text-white font-semibold rounded-md transition duration-300`}
         >
-          {session ? "Confirm & Pay" : "Login to Order"}
+          {isDisabled ? "Login to Order" : "Confirm & Pay"}
         </button>
       </form>
     </div>

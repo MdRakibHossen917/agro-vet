@@ -9,22 +9,16 @@ const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: {
-          label: "Email",
-          type: "text",
-          placeholder: "example@email.com",
-        },
+        email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        
         const usersCollection = await dbConnect(
           collectionNameObj.usersCollection
         );
         const user = await usersCollection.findOne({
           email: credentials.email,
         });
-
         if (!user) return null;
 
         const isValid = await bcrypt.compare(
@@ -41,21 +35,33 @@ const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  pages: {
-    signIn: "/login",  
-  },
-  session: {
-    strategy: "jwt",
-  },
+  pages: { signIn: "/login" },
+  session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        const usersCollection = await dbConnect(
+          collectionNameObj.usersCollection
+        );
+        const existingUser = await usersCollection.findOne({
+          email: user.email,
+        });
+        if (!existingUser) {
+          await usersCollection.insertOne({
+            name: user.name,
+            email: user.email,
+            createdAt: new Date(),
+          });
+        }
+      }
+      return true;
+    },
     async redirect({ url, baseUrl }) {
-      if (url.startsWith(baseUrl)) return url;
-      return baseUrl;
+      return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
 };
 
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };
