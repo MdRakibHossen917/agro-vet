@@ -1,6 +1,5 @@
 # Agro-Vet
 
-[Live Demo](https://agro-vet.vercel.app/)
 [![Live Demo](https://img.shields.io/badge/Live-Demo-green)](https://agro-vet.vercel.app/)  
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-blue)](https://github.com/MdRakibHossen917/agro-vet)  
 
