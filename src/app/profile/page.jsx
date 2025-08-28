@@ -27,7 +27,7 @@ export default function Profile() {
   if (!session) return null;
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md text-center">
+    <div className="max-w-sm mx-auto p-6 mt-5 md:mt-10 lg:mt-20 bg-white dark:bg-gray-900 rounded-xl shadow-md text-center">
       <h1 className="text-2xl font-bold mb-6 dark:text-white">My Profile</h1>
 
       {/* Profile Image */}
