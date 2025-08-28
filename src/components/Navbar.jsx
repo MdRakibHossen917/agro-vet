@@ -24,6 +24,9 @@ export default function Navbar() {
       <li>
         <Link href="/my-bookings">My Bookings</Link>
       </li>
+      <li>
+        <Link href="/profile">My Profile</Link>
+      </li>
     </>
   );
 

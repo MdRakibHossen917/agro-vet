@@ -2,7 +2,7 @@ import React from "react";
 
 export default function About() {
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 py-12">
       {/* Page Title */}
       <h1 className="text-4xl sm:text-5xl font-extrabold mb-10 text-center text-gray-800 dark:text-white">
         About Us
