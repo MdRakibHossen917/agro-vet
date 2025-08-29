@@ -15,7 +15,7 @@ export default async function ProductsSection() {
     <section className="  py-12 transition-colors duration-300">
       {/* Title & Subtitle */}
       <div className="text-center mb-10 px-4">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">
           Our Products
         </h1>
         <p className="mt-2 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">

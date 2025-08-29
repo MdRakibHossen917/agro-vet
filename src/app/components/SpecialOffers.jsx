@@ -69,7 +69,7 @@ export default function SpecialOffers() {
       >
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-green-800 dark:text-green-100 mb-4">
           Special Offers &{" "}
-          <span className="text-green-600 dark:text-green-300">Promotions</span>
+          <span className="text-green-800 dark:text-green-300">Promotions</span>
         </h2>
         <p className="text-lg text-green-700 dark:text-green-200 max-w-2xl mx-auto">
           Take advantage of our limited-time offers to keep your livestock

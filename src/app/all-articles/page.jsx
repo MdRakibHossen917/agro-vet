@@ -25,7 +25,7 @@ const ArticlesPage = async ({ searchParams }) => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
+      <h1 className="text-4xl font-extrabold text-green-800 dark:text-gray-100 mb-6 text-center">
         All Articles
       </h1>
 
@@ -92,7 +92,7 @@ const ArticlesPage = async ({ searchParams }) => {
             className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
               page === 1
                 ? "bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700 text-white dark:hover:bg-blue-500"
+                : "bg-green-700 hover:bg-green-900 text-white dark:hover:bg-green-600"
             }`}
           >
             Previous
@@ -105,7 +105,7 @@ const ArticlesPage = async ({ searchParams }) => {
             className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
               page === totalPages
                 ? "bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700 text-white dark:hover:bg-blue-500"
+                : "bg-green-700 hover:bg-green-900 text-white dark:hover:bg-green-600"
             }`}
           >
             Next

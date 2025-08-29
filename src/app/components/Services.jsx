@@ -116,7 +116,7 @@ export default function Services() {
           isHeaderVisible ? "animate-fade-in" : "opacity-0"
         }`}
       >
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
           Our Expert <span className="text-green-600">Services</span>
         </h1>
         <p className="text-lg md:text-xl text-gray-600 leading-relaxed">

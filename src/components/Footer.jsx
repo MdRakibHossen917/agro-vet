@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Footer() {
@@ -39,33 +40,33 @@ export default function Footer() {
 
         <div>
           <h3 className="font-semibold mb-2">Contact Us</h3>
-          <p>Phone: +880 1234 567890</p>
-          <p>Email: info@rampartpower.com</p>
+          <p>Phone: +8801300981501</p>
+          <p>Email: mdrakibhossencse.com</p>
           <div className="flex space-x-4 mt-2">
-            <a
+            <Link
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white"
             >
               Facebook
-            </a>
-            <a
+            </Link>
+            <Link
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white"
             >
               Twitter
-            </a>
-            <a
+            </Link>
+            <Link
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white"
             >
               Instagram
-            </a>
+            </Link>
           </div>
         </div>
       </div>
