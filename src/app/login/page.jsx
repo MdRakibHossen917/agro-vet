@@ -15,6 +15,11 @@ export default function LoginPage() {
     if (session) {
       router.push("/");
     }
+    // Prevent body scroll on login page
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [session]);
 
   const handleLogin = async (e) => {
@@ -30,7 +35,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-[calc(100vh-80px)] h-[calc(100vh-80px)] overflow-hidden">
       <div className="w-full max-w-md p-6 rounded shadow-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 

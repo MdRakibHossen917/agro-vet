@@ -5,9 +5,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "i.ibb.co", // এখানে external domain টা allow করো
+        hostname: "i.ibb.co",
+        pathname: "/**",
       },
     ],
+    unoptimized: true, // Disable image optimization to prevent 500 errors
   },
 };
 

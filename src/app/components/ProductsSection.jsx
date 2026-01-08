@@ -57,6 +57,7 @@ export default async function ProductsSection() {
                 height={160}
                 className="w-full h-56 object-cover transform hover:scale-105 transition-transform duration-300"
                 loading="lazy"
+                unoptimized={true}
               />
             </div>
 

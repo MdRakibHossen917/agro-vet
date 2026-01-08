@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import NextAuthProvider from "@/Providers/NextAuthProvider";
 import { AuthProvider } from "./context/AuthContext";
+import ConditionalFooter from "@/components/ConditionalFooter";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -31,7 +32,7 @@ export default function RootLayout({ children }) {
               <div className="flex-grow">
                 {children}
               </div>
-              <Footer />
+              <ConditionalFooter />
             </main>
           </AuthProvider>
         </NextAuthProvider>

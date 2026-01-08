@@ -1,7 +1,7 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
 export default function Navbar() {
@@ -9,6 +9,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,23 +31,29 @@ export default function Navbar() {
     }
   };
 
+  const navItems = [
+    { href: "/all-products", label: "Products" },
+    { href: "/all-articles", label: "Articles" },
+    { href: "/about", label: "About" },
+    { href: "/my-bookings", label: "My Bookings" },
+    { href: "/profile", label: "My Profile" },
+  ];
+
   const navData = (
     <>
-      <li>
-        <Link href="/all-products">Products</Link>
-      </li>
-      <li>
-        <Link href="/all-articles">Articles</Link>
-      </li>
-      <li>
-        <Link href="/about">About</Link>
-      </li>
-      <li>
-        <Link href="/my-bookings">My Bookings</Link>
-      </li>
-      <li>
-        <Link href="/profile">My Profile</Link>
-      </li>
+      {navItems.map((item) => {
+        const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
+        return (
+          <li key={item.href}>
+            <Link 
+              href={item.href}
+              className={isActive ? "underline decoration-2 underline-offset-4" : ""}
+            >
+              {item.label}
+            </Link>
+          </li>
+        );
+      })}
     </>
   );
 
@@ -144,7 +151,13 @@ export default function Navbar() {
             </div>
           </ul>
         </div>
-        <Link href="/" className="btn btn-ghost normal-case text-xl">
+        <Link 
+          href="/" 
+          className="normal-case text-xl font-semibold transition-colors duration-200 hover:text-green-600 dark:hover:text-green-400"
+          style={{
+            color: isScrolled ? "#FFFFFF" : "#1D232A",
+          }}
+        >
           Rampart Power
         </Link>
       </div>
