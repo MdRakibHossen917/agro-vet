@@ -7,15 +7,28 @@ import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 const PAGE_SIZE = 8; // Number of products per page
 
 const AllProducts = async ({ searchParams }) => {
-  const page = parseInt(searchParams?.page || 1);
-  const search = searchParams?.search || "";
+  // Handle async searchParams in Next.js 15
+  const params = searchParams instanceof Promise ? await searchParams : (searchParams || {});
+  const page = parseInt(params?.page || 1);
+  const search = params?.search || "";
 
   const productsCollection = await dbConnect(
     collectionNameObj.productsCollection
   );
 
-  // Build query for search
-  const query = search ? { title: { $regex: search, $options: "i" } } : {};
+  // Build query for search - escape special regex characters
+  const escapeRegex = (string) => {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  };
+  
+  const query = search 
+    ? { 
+        title: { 
+          $regex: escapeRegex(search), 
+          $options: "i" 
+        } 
+      } 
+    : {};
 
   const totalProducts = await productsCollection.countDocuments(query);
   const totalPages = Math.ceil(totalProducts / PAGE_SIZE);
@@ -28,6 +41,44 @@ const AllProducts = async ({ searchParams }) => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      {/* Discount Offer Marquee */}
+      <div className="overflow-hidden bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-700 dark:to-emerald-700 py-3 mb-6 ">
+        <div className="flex marquee-content whitespace-nowrap">
+          <div className="flex items-center space-x-8">
+            <span className="text-white font-bold text-lg md:text-xl">
+              🎉 Special Offer: Get 20% OFF on all products! Limited Time Only
+            </span>
+            <span className="text-white font-bold text-lg md:text-xl">
+              🔥 Buy Now: Free Shipping on orders above $100
+            </span>
+            <span className="text-white font-bold text-lg md:text-xl">
+              ⚡ Discount Alert: 15% OFF on bulk orders
+            </span>
+            <span className="text-white font-bold text-lg md:text-xl">
+              🎁 New Customer Offer: Get 25% OFF on first purchase
+            </span>
+            <span className="text-white font-bold text-lg md:text-xl">
+              💰 Best Prices Guaranteed: Quality Veterinary Products
+            </span>
+            <span className="text-white font-bold text-lg md:text-xl">
+              🎉 Special Offer: Get 20% OFF on all products! Limited Time Only
+            </span>
+            <span className="text-white font-bold text-lg md:text-xl">
+              🔥 Buy Now: Free Shipping on orders above $100
+            </span>
+            <span className="text-white font-bold text-lg md:text-xl">
+              ⚡ Discount Alert: 15% OFF on bulk orders
+            </span>
+            <span className="text-white font-bold text-lg md:text-xl">
+              🎁 New Customer Offer: Get 25% OFF on first purchase
+            </span>
+            <span className="text-white font-bold text-lg md:text-xl">
+              💰 Best Prices Guaranteed: Quality Veterinary Products
+            </span>
+          </div>
+        </div>
+      </div>
+
       <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-900 dark:text-gray-100">
         All Products
       </h1>

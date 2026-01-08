@@ -60,8 +60,9 @@ export default function SpecialOffers() {
   return (
     <section
       ref={sectionRef}
-      className="max-w-7xl mx-auto px-4 sm:px-6 py-16 bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-800 dark:to-green-900 rounded-2xl shadow-lg"
+      className="w-full px-4 sm:px-6 py-16 bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-800 dark:to-green-900"
     >
+      <div className="w-11/12 mx-auto">
       <div
         className={`text-center mb-12 ${
           isSectionVisible ? "animate-fade-in" : "opacity-0"
@@ -81,6 +82,7 @@ export default function SpecialOffers() {
         {offers.map((offer, index) => (
           <OfferCard key={offer.id} offer={offer} index={index} />
         ))}
+      </div>
       </div>
 
       <style jsx global>{`

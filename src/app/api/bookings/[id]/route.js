@@ -11,8 +11,11 @@ export async function DELETE(req, { params }) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = params;
-    if (!ObjectId.isValid(id)) {
+    // Handle async params in Next.js 15
+    const resolvedParams = params instanceof Promise ? await params : params;
+    const { id } = resolvedParams;
+
+    if (!id || !ObjectId.isValid(id)) {
       return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
     }
 
@@ -48,8 +51,11 @@ export async function PUT(req, { params }) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = params;
-    if (!ObjectId.isValid(id)) {
+    // Handle async params in Next.js 15
+    const resolvedParams = params instanceof Promise ? await params : params;
+    const { id } = resolvedParams;
+
+    if (!id || !ObjectId.isValid(id)) {
       return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
     }
 

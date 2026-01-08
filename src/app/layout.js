@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import NextAuthProvider from "@/Providers/NextAuthProvider";
 import { AuthProvider } from "./context/AuthContext";
@@ -25,7 +26,14 @@ export default function RootLayout({ children }) {
         <NextAuthProvider>
           <Navbar />
           <Toaster />
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <main className="pt-20 md:pt-16 min-h-screen flex flex-col">
+              <div className="flex-grow">
+                {children}
+              </div>
+              <Footer />
+            </main>
+          </AuthProvider>
         </NextAuthProvider>
       </body>
     </html>

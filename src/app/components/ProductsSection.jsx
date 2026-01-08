@@ -8,11 +8,28 @@ export default async function ProductsSection() {
     collectionNameObj.productsCollection
   );
 
-  // show 8 products
-  const data = await productsCollection.find({}).limit(8).toArray();
+  // Specific products to show on home page
+  const specificProducts = [
+    "Calf Scour Electrolyte Therapy",
+    "Cattle Foot-and-Mouth Vaccination",
+    "Equine Joint Supplement Therapy",
+    "Fish Pond Antiparasitic Treatment",
+    "Swine Parvovirus Vaccination",
+    "Beef Cattle Bovine Respiratory Complex (BRC)",
+    "Sheep & Goat Deworming",
+    "Cattle Mastitis Intramammary Treatment",
+    "Rabbit Coccidiosis"
+  ];
+
+  // Fetch only the specified products
+  const data = await productsCollection
+    .find({
+      title: { $in: specificProducts }
+    })
+    .toArray();
 
   return (
-    <section className="  py-12 transition-colors duration-300">
+    <section className="py-12 transition-colors duration-300">
       {/* Title & Subtitle */}
       <div className="text-center mb-10 px-4">
         <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">

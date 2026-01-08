@@ -108,7 +108,7 @@ export default function Services() {
   const isHeaderVisible = useOnScreen(headerRef, "-100px");
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16 space-y-16 shadow-2xl">
+    <div className="w-11/12 mx-auto px-6 py-16 space-y-16 shadow-2xl">
       {/* Section Header */}
       <div
         ref={headerRef}

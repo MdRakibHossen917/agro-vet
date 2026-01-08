@@ -6,7 +6,6 @@ import { authOptions } from "@/lib/authOptions";
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
-    console.log("Session:", session);
 
     if (!session) {
       return NextResponse.json(
@@ -21,7 +20,13 @@ export async function GET() {
     );
     const bookings = await bookingsCollection.find({ email }).toArray();
 
-    return NextResponse.json(bookings);
+    // Convert _id to string for JSON
+    const formattedBookings = bookings.map((booking) => ({
+      ...booking,
+      _id: booking._id.toString(),
+    }));
+
+    return NextResponse.json(formattedBookings);
   } catch (error) {
     console.error("Error fetching bookings:", error);
     return NextResponse.json(
@@ -54,11 +59,18 @@ export async function POST(request) {
       collectionNameObj.bookingsCollection
     );
 
-    const result = await bookingsCollection.insertOne(body);
+    // Add timestamps
+    const bookingData = {
+      ...body,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    const result = await bookingsCollection.insertOne(bookingData);
 
     return NextResponse.json({
       message: "Booking saved successfully",
-      insertedId: result.insertedId,
+      insertedId: result.insertedId.toString(),
     });
   } catch (error) {
     console.error("Error saving booking:", error);
